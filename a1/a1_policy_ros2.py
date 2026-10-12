@@ -75,8 +75,22 @@ class ActorMLP(nn.Module):
         return self.mlp(x)
 
 ckpt = torch.load(POLICY_PATH, map_location="cpu")
+#policy = ActorMLP()
+#policy.load_state_dict(ckpt["actor_state_dict"], strict=False)
+
+####### JENSEN MADE. Det udkommenterede ovenover førte til crash. Det her virker. ########### 
+
 policy = ActorMLP()
-policy.load_state_dict(ckpt["actor_state_dict"], strict=False)
+if "actor_state_dict" in ckpt:
+    sd = ckpt["actor_state_dict"]
+else:
+    sd = {k.replace("actor.", "mlp.", 1): v
+          for k, v in ckpt["model_state_dict"].items() if k.startswith("actor.")}
+missing, _ = policy.load_state_dict(sd, strict=False)
+assert not missing, f"Policy weights not loaded: {missing}"
+
+#######/ JENSEN MADE. ##############
+
 policy.eval()
 print("Policy loaded. Iteration:", ckpt["iter"])
 # ── Scene setup ────────────────────────────────────────────────────────────────

@@ -50,6 +50,8 @@ python scripts/reinforcement_learning/rsl_rl/train.py --task Isaac-Velocity-Flat
 
 # G1 — flat terrain, ~1500 iterations, ~20-25 min on an RTX 4090
 python scripts/reinforcement_learning/rsl_rl/train.py --task Isaac-Velocity-Flat-G1-v0 --headless
+# Or for custom training
+python ~/isaaclab-ros2-sim2sim/rl_training/train.py --task My-Velocity-Flat-G1-v0 --headless
 ```
 
 Checkpoints land in `$ISAACLAB_PATH/logs/rsl_rl/<experiment_name>/<timestamp>/`. For G1, also run `play.py` once to generate the exported TorchScript policy (it does this automatically as a side effect of loading a checkpoint for visualization):
@@ -83,6 +85,12 @@ G1_POLICY_PATH=~/IsaacLab/logs/rsl_rl/g1_flat/<timestamp>/exported/policy.pt \
 # Terminal 2
 source /opt/ros/humble/setup.bash
 python3 common/walk_forward.py
+# Or for a random direction
+source /opt/ros/humble/setup.bash
+python3 common/walk_randomly.py
+# Or for keyboard control
+source /opt/ros/humble/setup.bash
+python3 common/controller.py
 ```
 
 Both publish `/joint_states` and `/odom`, and subscribe to `/cmd_vel`.

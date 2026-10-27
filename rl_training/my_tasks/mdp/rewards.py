@@ -32,7 +32,7 @@ def feet_too_close(
     dist = torch.norm(feet_pos[:, 0] - feet_pos[:, 1], dim=1)  # (num_envs,)
     return torch.clamp(min_dist - dist, min=0.0)
 
-def standing_still_feet_air(
+def stationary_feet_airtime(
     env: ManagerBasedRLEnv, command_name: str, sensor_cfg: SceneEntityCfg, force_threshold: float = 1.0,
     command_threshold: float = 0.1,
 ) -> torch.Tensor:
@@ -43,3 +43,18 @@ def standing_still_feet_air(
     command = env.command_manager.get_command(command_name)  # (num_envs, 3)
     standing = torch.norm(command, dim=1) < command_threshold  # (num_envs,)
     return in_air.sum(dim=1).float() * standing
+
+def stand_still_joint_deviation(
+    env: ManagerBasedRLEnv, command_name: str, command_threshold: float = 0.1,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Sum of |joint pos - default joint pos| (rad) over the selected joints, only when the command is ~zero.
+
+    Use with a negative weight: gives the robot a target pose to settle into when told to stand still,
+    instead of only punishing foot lift-off. Uses the full (vx, vy, wz) command, so turning in place is not penalized.
+    """
+    asset = env.scene[asset_cfg.name]
+    deviation = asset.data.joint_pos[:, asset_cfg.joint_ids] - asset.data.default_joint_pos[:, asset_cfg.joint_ids]
+    command = env.command_manager.get_command(command_name)  # (num_envs, 3)
+    standing = torch.norm(command, dim=1) < command_threshold  # (num_envs,)
+    return torch.sum(torch.abs(deviation), dim=1) * standing

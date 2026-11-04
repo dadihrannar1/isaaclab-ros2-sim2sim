@@ -1,5 +1,5 @@
 services:
-  p7-echolocation:
+  unitree-g1-dev:
     build:
       context: .
       dockerfile: Dockerfile

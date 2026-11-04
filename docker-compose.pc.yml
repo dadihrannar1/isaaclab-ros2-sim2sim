@@ -24,7 +24,7 @@ services:
     image: eclipse/zenoh-bridge-ros2dds:latest
     container_name: zenoh_bridge_pc
     network_mode: host
-    # restart: unless-stopped
+    restart: unless-stopped
     environment:
       - ROS_DOMAIN_ID=0
     command: -e tcp/192.168.10.10:7447

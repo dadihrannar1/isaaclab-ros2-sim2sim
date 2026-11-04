@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
     ros-humble-rmw-cyclonedds-cpp \
     ros-humble-rosidl-generator-dds-idl \
     libyaml-cpp-dev \
-    git iputils-ping iproute2\
+    git iputils-ping iproute2 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/unitreerobotics/unitree_ros2.git /opt/unitree_ros2 \

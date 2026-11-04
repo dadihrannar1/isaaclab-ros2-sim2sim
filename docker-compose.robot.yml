@@ -16,7 +16,7 @@ services:
       - /dev/dri/:/dev/dri
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev:/dev
-      # - ./src:/workspace/src
+      - ./src_volume:/workspace/src
 
     stdin_open: true  
     tty: true

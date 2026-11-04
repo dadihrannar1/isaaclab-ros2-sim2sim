@@ -117,10 +117,14 @@ MIT, see [LICENSE](LICENSE).
 ## Docker
 Build image on the robot:
 ```bash
-docker compose build
+docker compose -f docker-compose.robot.yml build
 ```
 Open container on the robot:
 ```bash
 docker compose -f docker-compose.robot.yml up -d
+```
+On your own pc if you want to inspect topics there
+```bash
+docker compose -f docker-compose.pc.yml up -d
 ```
 

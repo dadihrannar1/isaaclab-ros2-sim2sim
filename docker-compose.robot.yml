@@ -22,10 +22,10 @@ services:
     tty: true
 
   zenoh-bridge:
-    image: eclipse/zenoh-bridge-ros2dds:latest
+    image: eclipse/zenoh-bridge-dds:latest
     container_name: zenoh_bridge
     network_mode: host
     restart: unless-stopped
     environment:
-      - ROS_DOMAIN_ID=0
       - 'CYCLONEDDS_URI=<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="eth0" priority="default" multicast="default"/></Interfaces></General></Domain></CycloneDDS>'
+    command: -d 0 -a "rt/lowstate|rt/sportmodestate|rt/rosout"

@@ -1,9 +1,10 @@
 services:
-  unitree-g1-dev:
+  unitree-g1-pc:
     build:
       context: .
       dockerfile: Dockerfile
     image: unitree_g1_dev:latest
+    container_name: unitree_g1_pc
     network_mode: host
     privileged: true
     environment:
@@ -14,7 +15,16 @@ services:
       - /dev/dri/:/dev/dri
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev:/dev
-    container_name: unitree_g1_dev
+      # - ./src:/workspace/src
 
     stdin_open: true  
     tty: true
+
+  zenoh-bridge:
+    image: eclipse/zenoh-bridge-ros2dds:latest
+    container_name: zenoh_bridge_pc
+    network_mode: host
+    # restart: unless-stopped
+    environment:
+      - ROS_DOMAIN_ID=0
+    command: -e tcp/192.168.10.10:7447

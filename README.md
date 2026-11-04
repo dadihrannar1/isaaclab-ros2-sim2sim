@@ -110,3 +110,17 @@ These cost real debugging time and aren't obvious from the Isaac Lab/Isaac Sim d
 ## License
 
 MIT, see [LICENSE](LICENSE).
+
+
+
+
+## Docker
+Build image on the robot:
+```bash
+docker compose build
+```
+Open container on the robot:
+```bash
+docker compose -f docker-compose.robot.yml up -d
+```
+

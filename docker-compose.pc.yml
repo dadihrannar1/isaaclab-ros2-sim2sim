@@ -25,4 +25,4 @@ services:
     container_name: zenoh_bridge_pc
     network_mode: host
     environment: []
-    command: -d 0 -e tcp/192.168.10.10:7447
+    command: -d 0 --fwd-discovery -e tcp/192.168.10.10:7447

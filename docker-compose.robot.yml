@@ -28,4 +28,4 @@ services:
     restart: unless-stopped
     environment:
       - 'CYCLONEDDS_URI=<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="eth0" priority="default" multicast="default"/></Interfaces></General></Domain></CycloneDDS>'
-    command: -d 0 -a "rt/lowstate|rt/sportmodestate|rt/rosout"
+    command: -d 0 --fwd-discovery -a "rt/lowstate|rt/sportmodestate|rt/rosout"

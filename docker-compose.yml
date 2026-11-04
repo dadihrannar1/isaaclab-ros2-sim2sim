@@ -1,0 +1,20 @@
+services:
+  p7-echolocation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: unitree_g1_dev:latest
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=0
+      
+    volumes:
+      - /dev/dri/:/dev/dri
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev:/dev
+    container_name: unitree_g1_dev
+
+    stdin_open: true  
+    tty: true

@@ -31,6 +31,9 @@ class MyG1FlatEnvCfg(G1FlatEnvCfg):
         cmd.resampling_time_range = (10.0, 10.0)  # seconds between new commands
         cmd.rel_standing_envs = 0.1  # fraction of commands that are "stand still" (stock: 0.02)
 
+        #increase reward for airtime of feet to improve gait and encourage more dynamic walking
+        self.rewards.feet_air_time.weight = 1.0 # default: 0.75
+
         # Old approach: penalize feet in the air while standing. Hurt the walking gait, kept for reference.
         # self.rewards.stationary_feet_airtime = RewTerm(
         #     func=mdp.stationary_feet_airtime,

@@ -58,6 +58,12 @@ RUN git clone https://github.com/unitreerobotics/unitree_ros2.git /opt/unitree_r
     && cd /opt/unitree_ros2/example \
     && colcon build
 
+RUN git clone https://github.com/unitreerobotics/unitree_sdk2.git /opt/unitree_sdk2 \
+    && cd /opt/unitree_sdk2 \
+    && mkdir build && cd build \
+    && cmake .. \
+    && make -j$(nproc)
+
 # Set up the environment middleware to talk to the G1
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 ENV ROS_DOMAIN_ID=0

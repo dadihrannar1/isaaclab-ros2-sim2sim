@@ -53,6 +53,9 @@ RUN apt-get update && apt-get install -y \
 RUN git clone https://github.com/unitreerobotics/unitree_ros2.git /opt/unitree_ros2 \
     && cd /opt/unitree_ros2/cyclonedds_ws \
     && source /opt/ros/humble/setup.bash \
+    && colcon build \
+    && source /opt/unitree_ros2/cyclonedds_ws/install/setup.bash \
+    && cd /opt/unitree_ros2/example \
     && colcon build
 
 # Set up the environment middleware to talk to the G1
@@ -62,6 +65,7 @@ ENV ROS_DOMAIN_ID=0
 # Source everything in every shell
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc \
     && echo "source /opt/unitree_ros2/cyclonedds_ws/install/setup.bash" >> /root/.bashrc \
+    && echo "source /opt/unitree_ros2/example/install/setup.bash" >> /root/.bashrc \
     && echo "[ -f /workspace/install/setup.bash ] && source /workspace/install/setup.bash" >> /root/.bashrc
 
 WORKDIR /workspace
